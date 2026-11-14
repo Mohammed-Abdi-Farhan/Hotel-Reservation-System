@@ -67,4 +67,5 @@ Thumbs.db
 # 8. Local Databases & Logs
 *.log
 *.sqlite3
-*.db
+*.db__pycache__/
+.pytest_cache/
