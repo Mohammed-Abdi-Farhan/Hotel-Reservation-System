@@ -1,0 +1,9 @@
+psycopg2-binary
+pytest
+sqlalchemy
+pandas
+matplotlib
+seaborn
+jupyter
+fastapi
+uvicorn
