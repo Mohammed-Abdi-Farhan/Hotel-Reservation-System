@@ -19,7 +19,7 @@ def get_float_input(prompt):
 
 def main():
     print("==============================================")
-    print("   🏨 APEX LUXURY HOTEL RESERVATION SYSTEM   ")
+    print("  HOTEL RESERVATION SYSTEM   ")
     print("==============================================")
     
     while True:
