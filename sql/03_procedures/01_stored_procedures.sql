@@ -1,7 +1,5 @@
--- ============================================================================
--- FILE: 01_stored_procedures.sql
--- PURPOSE: Encapsulates the booking logic to ensure atomicity (ACID).
--- ============================================================================
+-- Encapsulates the booking logic to ensure atomicity (ACID).
+
 
 CREATE OR REPLACE PROCEDURE sp_make_reservation(
     p_guest_email VARCHAR,

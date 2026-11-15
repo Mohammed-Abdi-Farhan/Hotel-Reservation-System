@@ -1,17 +1,9 @@
--- ============================================================================
--- FILE: 01_create_extensions.sql
--- PURPOSE: Initializes required PostgreSQL extensions for advanced data types,
---          indexing, and auditing.
--- AUTHOR: Senior Database Architect
--- ============================================================================
+-- Postgres extensions required for the hotel reservation engine.
 
--- btree_gist allows combining standard equality operators (e.g., room_id = room_id)
--- with GiST range operators (e.g., daterange overlap). This is CRITICAL for
--- enforcing our strict no-double-booking policy.
+-- Enables GiST indexes on standard data types (integers, etc). 
+-- This is strictly required for the EXCLUDE constraint we use to prevent double-booking.
 CREATE EXTENSION IF NOT EXISTS btree_gist;
 
--- Provides cryptographic functions (useful for hashing sensitive data if expanded).
+-- Standard utilities for hashing and UUID generation (reserved for future auth and distributed modules).
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
--- Enables UUID generation for distributed systems (forward-looking for M6).
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

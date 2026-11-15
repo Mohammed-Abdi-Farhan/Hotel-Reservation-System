@@ -1,10 +1,7 @@
--- ============================================================================
--- FILE: 02_create_eer_tables.sql
--- PURPOSE: Creates the EER Specialization hierarchy (Person -> Guest/Staff).
+-- Creates the EER Specialization hierarchy (Person -> Guest/Staff).
 --          Implements Base Entity and Subtype modeling.
--- ============================================================================
 
--- 1. CLEAN SLATE (Drop everything to ensure idempotency)
+-- Reset tables (drop in reverse order to avoid FK conflicts)
 DROP TABLE IF EXISTS Fact_Booking CASCADE;
 DROP TABLE IF EXISTS Reservation_Audit CASCADE;
 DROP TABLE IF EXISTS Payment CASCADE;
@@ -18,9 +15,7 @@ DROP TABLE IF EXISTS Staff CASCADE;
 DROP TABLE IF EXISTS Guest CASCADE;
 DROP TABLE IF EXISTS Person CASCADE;
 
--- 2. SUPERCLASS: PERSON
--- Note: Serves as the single source of truth for human identities to prevent
--- duplicate emails between staff and guests.
+-- Person superclass: stores shared identity data for all users
 CREATE TABLE Person (
     person_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -32,10 +27,7 @@ CREATE TABLE Person (
     CONSTRAINT chk_email_format CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
 );
 
-COMMENT ON TABLE Person IS 'Superclass table containing base identity data for all humans.';
-COMMENT ON COLUMN Person.email IS 'Enforced with a Regular Expression Check constraint to ensure data quality.';
-
--- 3. SUBCLASS: GUEST (Inherits from Person)
+-- Guest subclass
 CREATE TABLE Guest (
     person_id INT PRIMARY KEY REFERENCES Person(person_id) ON DELETE CASCADE,
     loyalty_points INT DEFAULT 0,
@@ -44,15 +36,11 @@ CREATE TABLE Guest (
     CONSTRAINT chk_vip_status CHECK (vip_status IN ('Standard', 'Silver', 'Gold', 'Platinum', 'Diamond'))
 );
 
-COMMENT ON TABLE Guest IS 'Subclass representing hotel patrons.';
-
--- 4. SUBCLASS: STAFF (Inherits from Person)
+-- Staff subclass
 CREATE TABLE Staff (
     person_id INT PRIMARY KEY REFERENCES Person(person_id) ON DELETE CASCADE,
     role VARCHAR(50) NOT NULL,
-    property_id INT, -- FK added later after Property table is created
+    property_id INT, -- FK constraint added in 03_create_property_tables.sql
     hire_date DATE DEFAULT CURRENT_DATE,
     CONSTRAINT chk_role CHECK (role IN ('General Manager', 'Front Desk', 'Housekeeping', 'Chef', 'Security'))
 );
-
-COMMENT ON TABLE Staff IS 'Subclass representing hotel employees.';

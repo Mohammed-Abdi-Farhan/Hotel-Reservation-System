@@ -1,7 +1,4 @@
--- ============================================================================
--- FILE: 04_create_transaction_tables.sql
--- PURPOSE: The OLTP Core. Handles Reservations, Payments, and Auditing.
--- ============================================================================
+--  The OLTP Core. Handles Reservations, Payments, and Auditing.
 
 -- 1. RESERVATION
 CREATE TABLE Reservation (

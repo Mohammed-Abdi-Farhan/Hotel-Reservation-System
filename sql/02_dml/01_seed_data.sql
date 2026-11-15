@@ -1,7 +1,5 @@
--- ============================================================================
--- FILE: 01_seed_data.sql
--- PURPOSE: Populates the enterprise database with realistic seed data.
--- ============================================================================
+--  Populates the enterprise database with realistic seed data.
+
 
 -- 1. Clean Slate & Reset IDs (Safe to run multiple times)
 TRUNCATE TABLE Fact_Booking, Payment, Reservation, Reservation_Audit, Room, Facility, Property, RatePlan, RoomType, Guest, Staff, Person, Dim_Date RESTART IDENTITY CASCADE;

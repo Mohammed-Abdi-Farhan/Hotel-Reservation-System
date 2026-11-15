@@ -1,7 +1,5 @@
--- ============================================================================
--- FILE: 02_triggers_and_views.sql
--- PURPOSE: Implements automated auditing and simplified reporting.
--- ============================================================================
+-- Implements automated auditing and simplified reporting.
+
 
 -- 1. TRIGGER FUNCTION: Automated Audit Logging
 CREATE OR REPLACE FUNCTION log_reservation_action()
